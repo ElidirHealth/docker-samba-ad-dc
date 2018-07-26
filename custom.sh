@@ -4,6 +4,8 @@
 # Custom script
 #
 
+#add cusom OU
+ldbmodify --url=/var/lib/samba/private/sam.ldb  /root/altouuser.ldiff
 
 # add groups
 samba-tool group add SITE_USER
@@ -18,9 +20,11 @@ samba-tool user add user1 ia4uV1EeKait --given-name User1 --surname One
 samba-tool user add user2 ia4uV1EeKait --given-name User2 --surname Two
 samba-tool user add user3 ia4uV1EeKait --given-name User3 --surname Three
 samba-tool user add user4 ia4uV1EeKait --given-name User4 --surname Four
+samba-tool user add otheruser4 ia4uV1EeKaitpass --given-name User4 --surname Other --userou "OU=Other-Users"
 
 # add users to groups
 samba-tool group addmembers SITE_USER user2,user3,user4
+samba-tool group addmembers SITE_USER otheruser4
 samba-tool group addmembers SITE_READONLY user1
 samba-tool group addmembers SITE_TIGER_A1 user1,user2
 samba-tool group addmembers SITE_LEOPARD_A2 user1,user2,user3
