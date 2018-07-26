@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y build-essential libacl1-dev libattr1-de
       python-dnspython gdb pkg-config libpopt-dev libldap2-dev \
       dnsutils libbsd-dev attr krb5-user docbook-xsl libcups2-dev acl python-xattr \
       samba smbclient krb5-kdc openssh-server supervisor expect pwgen rsyslog \
-      sssd sssd-tools libpam-sss libnss-sss libnss-ldap bind9 dnsutils
+      sssd sssd-tools libpam-sss libnss-sss libnss-ldap bind9 dnsutils ldb-tools
 RUN mkdir -p /var/run/sshd
 RUN mkdir -p /var/log/supervisor
 RUN sed -ri 's/PermitRootLogin without-password/PermitRootLogin Yes/g' /etc/ssh/sshd_config
@@ -42,6 +42,9 @@ RUN chmod 0600 /etc/sssd/sssd.conf
 # Add custom script
 COPY custom.sh /usr/local/bin/custom.sh
 RUN chmod +x /usr/local/bin/custom.sh
+
+COPY altouuser.ldiff	/root
+
 
 # Add supervisord and init
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
